@@ -1,4 +1,3 @@
-index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,25 +38,36 @@ index.html
     <p>This is a legally binding agreement between:</p>
     <p><strong>Mammad Mammadov</strong> and <strong>Tahmina Guliyeva</strong></p>
     <p>Both parties agree to marry before the age of 30.</p>
-    <p>Click the button below to sign the agreement electronically.</p>
-    <button id="signButton">Sign Agreement</button>
-    <p id="status"></p>
+    <p>Click the button below to download the agreement.</p>
+    <button onclick="downloadAgreement()">Download Agreement</button>
   </div>
 
   <script>
-    document.getElementById("signButton").addEventListener("click", async () => {
-      document.getElementById("status").innerText = "Signing the agreement...";
-      try {
-        const response = await fetch('/sign', { method: 'POST' });
-        const data = await response.json();
-        document.getElementById("status").innerText = "Agreement signed successfully!";
-        console.log(data);
-      } catch (error) {
-        document.getElementById("status").innerText = "An error occurred while signing.";
-        console.error(error);
-      }
-    });
+    function downloadAgreement() {
+      const agreementText = `
+Marriage Agreement
+------------------
+
+This is a legally binding agreement between:
+- Mammad Mammadov
+- Tahmina Guliyeva
+
+Both parties agree to marry before the age of 30.
+
+Signed:
+- Mammad Mammadov
+- Tahmina Guliyeva
+
+Date: ${new Date().toLocaleDateString()}
+      `;
+      const blob = new Blob([agreementText], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Marriage_Agreement.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
   </script>
 </body>
 </html>
-
