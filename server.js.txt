@@ -1,0 +1,39 @@
+server.js
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
+
+const app = express();
+app.use(express.static("public"));
+app.use(express.json());
+
+// Mock signing endpoint
+app.post("/sign", (req, res) => {
+  const contract = `
+    Marriage Agreement
+    ------------------
+
+    This is a legally binding agreement between:
+    - Mammad Mammadov
+    - Tahmina Guliyeva
+
+    Both parties agree to marry before the age of 30.
+
+    Signed:
+    - Mammad Mammadov
+    - Tahmina Guliyeva
+
+    Date: ${new Date().toLocaleDateString()}
+  `;
+
+  // Save the contract as a text file
+  fs.writeFileSync(path.join(__dirname, "signed_contract.txt"), contract);
+
+  res.json({ message: "Contract signed successfully!", date: new Date() });
+});
+
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});

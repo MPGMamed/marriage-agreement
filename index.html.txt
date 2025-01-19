@@ -1,0 +1,63 @@
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marriage Agreement</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Marriage Agreement</h1>
+    <p>This is a legally binding agreement between:</p>
+    <p><strong>Mammad Mammadov</strong> and <strong>Tahmina Guliyeva</strong></p>
+    <p>Both parties agree to marry before the age of 30.</p>
+    <p>Click the button below to sign the agreement electronically.</p>
+    <button id="signButton">Sign Agreement</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    document.getElementById("signButton").addEventListener("click", async () => {
+      document.getElementById("status").innerText = "Signing the agreement...";
+      try {
+        const response = await fetch('/sign', { method: 'POST' });
+        const data = await response.json();
+        document.getElementById("status").innerText = "Agreement signed successfully!";
+        console.log(data);
+      } catch (error) {
+        document.getElementById("status").innerText = "An error occurred while signing.";
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
+
